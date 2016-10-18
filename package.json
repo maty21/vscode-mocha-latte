@@ -1,9 +1,9 @@
 {
-  "name": "vscode-mocha",
-  "displayName": "Mocha",
-  "description": "Runs Mocha tests",
+  "name": "vscode-mocha-latte",
+  "displayName": "Mocha Latte",
+  "description": "Runs Mocha tests.  Bugfixed for Mac and Linux.",
   "version": "0.1.1",
-  "publisher": "Compulim",
+  "publisher": "cspotcode",
   "engines": {
     "vscode": "^0.10.1"
   },
@@ -11,10 +11,10 @@
   "galleryBanner.color": "#8A6343",
   "repository": {
     "type": "git",
-    "url": "https://github.com/compulim/vscode-mocha.git"
+    "url": "https://github.com/cspotcode/vscode-mocha-latte.git"
   },
-  "bugs": "https://github.com/compulim/vscode-mocha/issues/",
-  "homepage": "https://github.com/compulim/vscode-mocha/blob/master/README.md",
+  "bugs": "https://github.com/cspotcode/vscode-mocha-latte/issues/",
+  "homepage": "https://github.com/cspotcode/vscode-mocha-latte/blob/master/README.md",
   "keywords": [
     "assert",
     "bdd",

@@ -1,9 +1,11 @@
-# Mocha
+# Mocha Latte
 Runs Mocha tests, all or selected. Then prints the result to an output window.
+
+This is a maintained, bugfixed fork of the Mocha extension.  Unlike the original, it also works on Mac and Linux.  To use "Mocha Latte", uninstall the "Mocha" extension.
 
 This extension is inspired by [Node.js Tools for Visual Studio](https://github.com/Microsoft/nodejstools).
 
-![Demo showing Mocha test result](https://raw.githubusercontent.com/compulim/vscode-mocha/master/demo.png)
+![Demo showing Mocha test result](https://raw.githubusercontent.com/cspotcode/vscode-mocha-latte/master/demo.png)
 
 ## Usage
 To run Mocha tests:
@@ -19,13 +21,13 @@ You can run tests by:
 ### How it works
 By default, this extensions will discover tests by searching for `test/**/*.js` under your workspace.
 
-Because your tests may requires a newer version of Node.js than the one powering Visual Studio Code, thus, this extension will attempt to find your installed Node.js and use it for your tests. It will search for the installed Node.js as indicated by environmental variable `PATH`. You can find the logic [here](https://github.com/compulim/vscode-mocha/blob/master/fork.js).
+Because your tests may requires a newer version of Node.js than the one powering Visual Studio Code, thus, this extension will attempt to find your installed Node.js and use it for your tests. It will search for the installed Node.js as indicated by environmental variable `PATH`. You can find the logic [here](https://github.com/cspotcode/vscode-mocha-latte/blob/master/fork.js).
 
 When the test is being run, we will add `NODE_PATH` to point to your workspace `node_modules` folder to help [resolving external modules](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders).
 
 ## Fit yourself
 
-No one shoe could fit everyone. You may need to turn some switches on to fit your project. Please [file us](https://github.com/compulim/vscode-mocha/issues/new/) an issue if you think there is a better way to fit you and the others.
+No one shoe could fit everyone. You may need to turn some switches on to fit your project. Please [file us](https://github.com/cspotcode/vscode-mocha-latte/issues/new/) an issue if you think there is a better way to fit you and the others.
 
 ### Configuring Mocha options
 Under File > Preferences > Workspace Settings, you can configure [Mocha options](https://github.com/mochajs/mocha/blob/master/lib/mocha.js), e.g. run in "tdd" mode, detect/ignore leaks, etc.
@@ -83,8 +85,8 @@ Following commands are also supported:
   * First public release
 
 ## Contributions
-Love this extension? [Star](https://github.com/compulim/vscode-mocha/stargazers) us and rate us!
+Love this extension? [Star](https://github.com/cspotcode/vscode-mocha-latte/stargazers) us and rate us!
 
-Want to make this extension even more awesome? [Send us your wish](https://github.com/compulim/vscode-mocha/issues/new/).
+Want to make this extension even more awesome? [Send us your wish](https://github.com/cspotcode/vscode-mocha-latte/issues/new/).
 
-Hate how it is working? [File an issue](https://github.com/compulim/vscode-mocha/issues/new/) to us.
+Hate how it is working? [File an issue](https://github.com/cspotcode/vscode-mocha-latte/issues/new/) to us.
