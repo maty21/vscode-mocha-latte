@@ -16,14 +16,11 @@
   "bugs": "https://github.com/cspotcode/vscode-mocha-latte/issues/",
   "homepage": "https://github.com/cspotcode/vscode-mocha-latte/blob/master/README.md",
   "keywords": [
-    "assert",
     "bdd",
     "mocha",
     "tdd",
     "test",
-    "testing",
-    "unit test",
-    "unittest"
+    "testing"
   ],
   "categories": [
     "Other"
