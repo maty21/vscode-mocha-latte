@@ -34,12 +34,12 @@ function fork(jsPath, args, options) {
 
 function nodeJSPath() {
   return new Promise((resolve, reject) => {
-    const paths = process.env.PATH.split(process.platform === 'win32' ? ';' : ':');
+    const paths = process.env.PATH.split(path.delimiter);
 
-    const searchPaths = [].concat(
-      paths.map(p => path.resolve(p, 'node')),
-      paths.map(p => path.resolve(p, 'node.exe'))
-    );
+    const pathExts = process.platform === 'win32' ? process.env.PATHEXT.split(path.delimiter) : [''];
+    const searchPaths = paths.reduce((a, p) => (
+      a.concat(pathExts.map(ext => path.resolve(p, 'node' + ext)))
+    ), []);
 
     Promise.all(searchPaths.map(p => access(p, fs.X_OK).then(() => p, err => false)))
       .then(
