@@ -2,7 +2,7 @@
   "name": "vscode-mocha-latte",
   "displayName": "Mocha Latte",
   "description": "Runs Mocha tests.  Bugfixed for Mac and Linux.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "cspotcode",
   "engines": {
     "vscode": "^0.10.1"
