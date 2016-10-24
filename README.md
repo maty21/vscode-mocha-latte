@@ -71,19 +71,6 @@ Following commands are also supported:
 | `mocha.runTestsByPattern` | Mocha: Run tests matching a pattern |
 | `mocha.selectAndRunTest` | Mocha: Select and run a test |
 
-## Change log
-* 0.1.1 (2016-04-27)
-  * Feature: New settings - test files glob and ignore globs
-  * Feature: New settings - environment variables for discovering and running tests
-* 0.1.0 (2016-04-26)
-  * Feature: Run tests by grep pattern
-  * Feature: Rerun failed tests
-  * Feature: Rerun last set of tests
-  * Feature: Dump severe error to output channel
-  * Fix: When selecting tests, it did not use Mocha options in workspace settings
-* 0.0.1 (2016-04-25)
-  * First public release
-
 ## Contributions
 Love this extension? [Star](https://github.com/cspotcode/vscode-mocha-latte/stargazers) us and rate us!
 
