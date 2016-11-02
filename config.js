@@ -17,3 +17,16 @@ exports.options = function options() {
 exports.files = function files() {
   return getConfiguration().files;
 };
+
+exports.subdirectory = function subdirectory() {
+  return getConfiguration().subdirectory;
+};
+
+exports.requires = function requires() {
+  const files = getConfiguration().requires || [];
+
+  if(!Array.isArray(files))
+    throw new Error("mocha.requires configuration must be an array of files");
+
+  return files.map(s => s.toString());
+};

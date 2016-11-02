@@ -49,6 +49,12 @@ Under File > Preferences > Workspace Settings, you can configure [Mocha options]
 
 // Mocha: Environment variables to run your tests
 "mocha.env": {},
+
+// Mocha: Subdirectory in the Workspace where run mocha from
+"mocha.subfolder": "",
+
+// Mocha: List of files to require before running mocha
+"mocha.requires": [],
 ```
 
 ### Setting a keyboard shortcut

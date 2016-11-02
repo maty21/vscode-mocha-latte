@@ -10,6 +10,9 @@ const
 const
   args = JSON.parse(process.argv[2]);
 
+for(let file of args.requires)
+  require(file);
+
 createMocha(args.rootPath, args.options, args.files.glob, args.files.ignore)
   .then(mocha => crawlTests(mocha.suite))
   .then(tests => console.error(JSON.stringify(tests, null, 2)))

@@ -12,6 +12,9 @@ const
   args = JSON.parse(process.argv[2]),
   options = args.options;
 
+for(let file of args.requires)
+  require(file);
+
 if (Object.keys(options || {}).length) {
   console.log(`Applying Mocha options:\n${indent(JSON.stringify(options, null, 2))}`);
 } else {
