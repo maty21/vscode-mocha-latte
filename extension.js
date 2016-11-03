@@ -29,27 +29,39 @@ function activate(context) {
   const subscriptions = context.subscriptions;
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runAllTests', function () {
-    runAllTests();
+    if (hasWorkspace()) {
+      runAllTests();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runTestAtCursor', function () {
-    runTestAtCursor();
+    if (hasWorkspace()) {
+      runTestAtCursor();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.selectAndRunTest', function () {
-    selectAndRunTest();
+    if (hasWorkspace()) {
+      selectAndRunTest();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runFailedTests', function () {
-    runFailedTests();
+    if (hasWorkspace()) {
+      runFailedTests();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runTestsByPattern', function () {
-    runTestsByPattern();
+    if (hasWorkspace()) {
+      runTestsByPattern();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runLastSetAgain', function () {
-    runLastSetAgain();
+    if (hasWorkspace()) {
+      runLastSetAgain();
+    }
   }));
 }
 
@@ -60,6 +72,21 @@ function deactivate() {
 }
 
 exports.deactivate = deactivate;
+
+function hasWorkspace() {
+  const root = vscode.workspace.rootPath;
+  const validWorkspace = typeof root === "string" && root.length;
+
+  console.log(root);
+  console.log(vscode);
+  console.log(validWorkspace);
+
+  if(!validWorkspace) {
+    vscode.window.showErrorMessage('Please open a folder before trying to execute Mocha.');
+  }
+
+  return validWorkspace;
+}
 
 function fork(jsPath, args, options) {
   return findNodeJSPath().then(execPath => new Promise((resolve, reject) => {
