@@ -9,6 +9,7 @@ const
   fs = require('fs'),
   Glob = require('glob').Glob,
   Mocha = require('mocha'),
+  parser = require('./parser'),
   path = require('path'),
   Promise = require('bluebird'),
   Runner = require('./runner'),
@@ -29,6 +30,10 @@ function activate(context) {
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runAllTests', function () {
     runAllTests();
+  }));
+
+  subscriptions.push(vscode.commands.registerCommand('mocha.runTestAtCursor', function () {
+    runTestAtCursor();
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.selectAndRunTest', function () {
@@ -83,6 +88,40 @@ function runAllTests() {
     ).catch(
       err => vscode.window.showErrorMessage(`Failed to run tests due to ${err.message}`)
     );
+}
+
+function runTestAtCursor(){
+  const editor = vscode.window.activeTextEditor;
+
+  if (!editor) {
+    return vscode.window.showErrorMessage('No active editors were found.');
+  } else if(editor.document.languageId !== 'javascript') {
+    return vscode.window.showErrorMessage('Mocha is only available for JavaScript files.');
+  }
+
+  try{
+    const tests = parser.getTests(editor.document.getText());
+    const currentLine = editor.selection.active.line + 1;
+
+    const test = tests.find(test => test.start <= currentLine && currentLine <= test.end);
+
+    return runner.loadTestFiles()
+      .then(() => {
+
+        if (test) {
+          return runner.runWithGrep(test.label)
+        } else {
+          // Only run test from the current file
+          const currentFile = editor.document.fileName;
+          runner.tests = runner.tests.filter(t => t.file === currentFile);
+
+          return runner.runAll();
+        }
+      })
+      .catch(err => vscode.window.showErrorMessage(`Failed to run tests by pattern due to ${err.message}`));
+  }catch(e){
+    return vscode.window.showErrorMessage(`Could not parse the current file: ${e.message}.`);
+  }
 }
 
 function selectAndRunTest() {

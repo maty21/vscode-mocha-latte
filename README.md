@@ -16,6 +16,7 @@ You can run tests by:
 * All tests in the workspace
 * All or failed tests in last run
 * Tests that match a Regular Expression
+* Tests that the current cursor position (or the current file)
 * One test that you pick from a list
 
 ### How it works
@@ -74,6 +75,7 @@ Following commands are also supported:
 | `mocha.runAllTests` | Mocha: Run all tests |
 | `mocha.runFailedTests` | Mocha: Run failed tests |
 | `mocha.runLastSetAgain` | Mocha: Run last set again |
+| `mocha.runTestAtCursor` | Mocha: Run tests matching the current cursor position or the current active file |
 | `mocha.runTestsByPattern` | Mocha: Run tests matching a pattern |
 | `mocha.selectAndRunTest` | Mocha: Select and run a test |
 
