@@ -126,29 +126,30 @@ function runTestAtCursor(){
     return vscode.window.showErrorMessage('Mocha is only available for JavaScript files.');
   }
 
+  let detectError = 'No test(s) were detected at the current cursor position.';
+  let test = null;
+
   try{
-    const tests = parser.getTests(editor.document.getText());
-    const currentLine = editor.selection.active.line + 1;
-
-    const test = tests.find(test => test.start <= currentLine && currentLine <= test.end);
-
-    return runner.loadTestFiles()
-      .then(() => {
-
-        if (test) {
-          return runner.runWithGrep(test.label)
-        } else {
-          // Only run test from the current file
-          const currentFile = editor.document.fileName;
-          runner.tests = runner.tests.filter(t => t.file === currentFile);
-
-          return runner.runAll();
-        }
-      })
-      .catch(err => vscode.window.showErrorMessage(`Failed to run tests by pattern due to ${err.message}`));
+    test = parser.getTestAtCursor(editor.document.getText(), editor.selection.active);
   }catch(e){
-    return vscode.window.showErrorMessage(`Could not parse the current file: ${e.message}.`);
+    console.error(e);
+    detectError = `Parsing failed while detecting test(s) at the current cursor position: ${e.message}`;
   }
+
+  vscode.window.showErrorMessage(test);
+  return runner.loadTestFiles()
+    .then(() => {
+      if (test) {
+        return runner.runWithGrep(test.label);
+      } else {
+        // Only run test from the current file
+        const currentFile = editor.document.fileName;
+        runner.tests = runner.tests.filter(t => t.file === currentFile);
+
+        return runner.runAll([`WARNING: ${detectError} Running all tests in the current file.`]);
+      }
+    })
+    .catch(err => vscode.window.showErrorMessage(`Failed to run test(s) at the cursor position due to ${err.message}`));
 }
 
 function selectAndRunTest() {

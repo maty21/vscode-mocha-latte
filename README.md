@@ -26,6 +26,10 @@ Because your tests may requires a newer version of Node.js than the one powering
 
 When the test is being run, we will add `NODE_PATH` to point to your workspace `node_modules` folder to help [resolving external modules](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders).
 
+When you ask to run the test under cursor position, the extension will parse the current file and look for matching tests or suites.
+If the file contains tests or suites defined using template strings or via dynamic generation, the regular expression `(.+)` will be used as a placeholder in order to have a better matching without having to evaluate the file twice.
+This implies that more tests than expected might be run.
+
 ## Fit yourself
 
 No one shoe could fit everyone. You may need to turn some switches on to fit your project. Please [file us](https://github.com/cspotcode/vscode-mocha-latte/issues/new/) an issue if you think there is a better way to fit you and the others.

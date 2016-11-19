@@ -26,7 +26,7 @@ function stripWarnings(text) { // Remove node.js warnings, which would make JSON
   return text.replace(/\(node:\d+\) DeprecationWarning:\s[^\n]+/g, "");
 }
 
-function runTests(testFiles, grep) {
+function runTests(testFiles, grep, messages) {
   // Allow the user to choose a different subfolder
   const rootPath = applySubdirectory(vscode.workspace.rootPath);
 
@@ -52,6 +52,12 @@ function runTests(testFiles, grep) {
 
     outputChannel.appendLine(`Running Mocha with Node.js at ${process.spawnfile}\n`);
 
+    if (messages) {
+      for (let message of messages) {
+        outputChannel.append(`${message}\n`);
+      }
+    }
+    
     const stderrBuffers = [];
 
     process.stderr.on('data', data => {
