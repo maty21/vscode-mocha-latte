@@ -1,4 +1,14 @@
-0.1.3 (TBD)
+v0.1.3 (2016-11-19)
+=====
+* 98df027 (HEAD -> master) Adds more thorough ignore rules
+* 3f17955 Fixes #4: `require('Glob')` should be `require('glob')`
+* d1c0f18 Removes unnecessary `require('mocha')`
+* 6d631d8 Adds github issue template
+* 75e884f (me/master) Adds gitignore rule for .vscode/symbols.json
+* 50c34e0 Moves old changelog out of README
+* 7caff02 (tag: v0.1.2) Bumps to v0.1.2
+
+0.1.3 (2016-11-8)
 =====
 - Moves old changelog out of README
 - Fixes #4: broken on Linux due to incorrect case in `require()` call
