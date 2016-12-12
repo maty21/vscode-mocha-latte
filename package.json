@@ -70,9 +70,14 @@
           "type": "string"
         },
         "mocha.files.ignore": {
-          "default": ["**/.git/**/*", "**/node_modules/**/*"],
+          "default": [
+            "**/.git/**/*",
+            "**/node_modules/**/*"
+          ],
           "description": "Mocha: Globs to ignore when searching for test files",
-          "type": ["string"]
+          "type": [
+            "string"
+          ]
         },
         "mocha.env": {
           "default": {},
