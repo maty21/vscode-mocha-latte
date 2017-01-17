@@ -8,7 +8,7 @@ const
   trimArray = require('../utils').trimArray;
 
 const
-  args = JSON.parse(process.argv[2]);
+  args = JSON.parse(process.argv[process.argv.length - 1]);
 
 createMocha(args.rootPath, args.options, args.files.glob, args.files.ignore)
   .then(mocha => crawlTests(mocha.suite))

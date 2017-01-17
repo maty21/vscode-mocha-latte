@@ -77,6 +77,10 @@
         "mocha.env": {
           "default": {},
           "description": "Mocha: Environment variables to run your tests"
+        },
+        "mocha.node_options": {
+          "default": [],
+          "description": "Mocha: Options to pass to node executable"
         }
       }
     }

@@ -49,6 +49,10 @@ Under File > Preferences > Workspace Settings, you can configure [Mocha options]
 
 // Mocha: Environment variables to run your tests
 "mocha.env": {},
+
+// Mocha: Options to pass to node executable
+"mocha.node_options": [],
+
 ```
 
 ### Setting a keyboard shortcut
