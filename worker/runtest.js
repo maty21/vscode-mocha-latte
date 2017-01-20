@@ -9,7 +9,7 @@ const
   Promise = require('bluebird');
 
 const
-  args = JSON.parse(process.argv[2]),
+  args = JSON.parse(process.argv[process.argv.length - 1]),
   options = args.options;
 
 if (Object.keys(options || {}).length) {

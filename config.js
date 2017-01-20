@@ -14,6 +14,10 @@ exports.options = function options() {
   return getConfiguration().options;
 };
 
+exports.node_options = function options() {
+  return getConfiguration().node_options;
+};
+
 exports.files = function files() {
   return getConfiguration().files;
 };

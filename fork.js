@@ -6,7 +6,8 @@ const
   path = require('path'),
   Promise = require('bluebird'),
   trimArray = require('./utils').trimArray,
-  vscode = require('vscode');
+  vscode = require('vscode'),
+  config = require('./config');
 
 const
   access = Promise.promisify(fs.access);
@@ -16,7 +17,7 @@ function fork(jsPath, args, options) {
     execPath => new Promise((resolve, reject) => {
       resolve(ChildProcess.spawn(
         execPath,
-        [ jsPath ].concat(args),
+        config.node_options().concat([ jsPath ]).concat(args),
         options
       ))
     }),
