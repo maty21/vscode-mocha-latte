@@ -8,7 +8,6 @@ const
   escapeRegExp = require('escape-regexp'),
   fs = require('fs'),
   Glob = require('glob').Glob,
-  Mocha = require('mocha'),
   parser = require('./parser'),
   path = require('path'),
   Promise = require('bluebird'),
