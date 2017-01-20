@@ -70,7 +70,7 @@ function crawlTests(suite) {
           name,
           fullName: trimArray(entry.path).concat([ name ]).join(' '),
           suitePath: entry.path,
-          file: suite.file
+          file: test.file
         };
       })
     );

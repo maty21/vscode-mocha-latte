@@ -10,6 +10,7 @@
 - Adds `runTestAtCursor` command: Runs only the test under the cursor. (#2)
 - Fixes #1: When no workspace is open, mocha-latte shows a helpful error message. (via #2)
 - Fixes #5: spawned mocha process inherits all environment variables of parent.
+- Fixes #7: Allow tests outside of any containing `describe()` call.
 
 0.1.2 (2016-10-18)
 =====
