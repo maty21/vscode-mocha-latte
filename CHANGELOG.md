@@ -1,8 +1,15 @@
-0.1.3 (TBD)
+0.1.3 (2017-01-20)
 =====
+
 - Moves old changelog out of README
 - Fixes #4: broken on Linux due to incorrect case in `require()` call
-- Adds
+- Debugging this extension will automatically open `test/workspace` (for developers)
+- Adds support for passing custom node CLI options (#6)
+- Adds `subdirectory` option: runs mocha with user-specified cwd (#2)
+- Adds `requires` option: like mocha's `--requires` CLI option (#2)
+- Adds `runTestAtCursor` command: Runs only the test under the cursor. (#2)
+- Fixes #1: When no workspace is open, mocha-latte shows a helpful error message. (via #2)
+- Fixes #5: spawned mocha process inherits all environment variables of parent.
 
 0.1.2 (2016-10-18)
 =====
