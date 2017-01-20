@@ -1,4 +1,4 @@
-0.1.3 (2017-01-20)
+0.2.0 (2017-01-20)
 =====
 
 - Moves old changelog out of README
