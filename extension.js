@@ -8,6 +8,8 @@ const
   escapeRegExp = require('escape-regexp'),
   fs = require('fs'),
   Glob = require('glob').Glob,
+  Mocha = require('mocha'),
+  parser = require('./parser'),
   path = require('path'),
   Promise = require('bluebird'),
   Runner = require('./runner'),
@@ -27,23 +29,39 @@ function activate(context) {
   const subscriptions = context.subscriptions;
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runAllTests', function () {
-    runAllTests();
+    if (hasWorkspace()) {
+      runAllTests();
+    }
+  }));
+
+  subscriptions.push(vscode.commands.registerCommand('mocha.runTestAtCursor', function () {
+    if (hasWorkspace()) {
+      runTestAtCursor();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.selectAndRunTest', function () {
-    selectAndRunTest();
+    if (hasWorkspace()) {
+      selectAndRunTest();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runFailedTests', function () {
-    runFailedTests();
+    if (hasWorkspace()) {
+      runFailedTests();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runTestsByPattern', function () {
-    runTestsByPattern();
+    if (hasWorkspace()) {
+      runTestsByPattern();
+    }
   }));
 
   subscriptions.push(vscode.commands.registerCommand('mocha.runLastSetAgain', function () {
-    runLastSetAgain();
+    if (hasWorkspace()) {
+      runLastSetAgain();
+    }
   }));
 }
 
@@ -54,6 +72,21 @@ function deactivate() {
 }
 
 exports.deactivate = deactivate;
+
+function hasWorkspace() {
+  const root = vscode.workspace.rootPath;
+  const validWorkspace = typeof root === "string" && root.length;
+
+  console.log(root);
+  console.log(vscode);
+  console.log(validWorkspace);
+
+  if(!validWorkspace) {
+    vscode.window.showErrorMessage('Please open a folder before trying to execute Mocha.');
+  }
+
+  return validWorkspace;
+}
 
 function fork(jsPath, args, options) {
   return findNodeJSPath().then(execPath => new Promise((resolve, reject) => {
@@ -82,6 +115,41 @@ function runAllTests() {
     ).catch(
       err => vscode.window.showErrorMessage(`Failed to run tests due to ${err.message}`)
     );
+}
+
+function runTestAtCursor(){
+  const editor = vscode.window.activeTextEditor;
+
+  if (!editor) {
+    return vscode.window.showErrorMessage('No active editors were found.');
+  } else if(editor.document.languageId !== 'javascript') {
+    return vscode.window.showErrorMessage('Mocha is only available for JavaScript files.');
+  }
+
+  let detectError = 'No test(s) were detected at the current cursor position.';
+  let test = null;
+
+  try{
+    test = parser.getTestAtCursor(editor.document.getText(), editor.selection.active);
+  }catch(e){
+    console.error(e);
+    detectError = `Parsing failed while detecting test(s) at the current cursor position: ${e.message}`;
+  }
+
+  vscode.window.showErrorMessage(test);
+  return runner.loadTestFiles()
+    .then(() => {
+      if (test) {
+        return runner.runWithGrep(test.label);
+      } else {
+        // Only run test from the current file
+        const currentFile = editor.document.fileName;
+        runner.tests = runner.tests.filter(t => t.file === currentFile);
+
+        return runner.runAll([`WARNING: ${detectError} Running all tests in the current file.`]);
+      }
+    })
+    .catch(err => vscode.window.showErrorMessage(`Failed to run test(s) at the cursor position due to ${err.message}`));
 }
 
 function selectAndRunTest() {

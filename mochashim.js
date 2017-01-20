@@ -13,8 +13,22 @@ function envWithNodePath(rootPath) {
   }, config.env());
 }
 
-function runTests(testFiles, grep) {
-  const rootPath = vscode.workspace.rootPath;
+function applySubdirectory(rootPath){
+  const subdirectory = config.subdirectory()
+
+  if(subdirectory)
+    rootPath = path.resolve(rootPath, subdirectory);
+
+  return rootPath;
+}
+
+function stripWarnings(text) { // Remove node.js warnings, which would make JSON parsing fail
+  return text.replace(/\(node:\d+\) DeprecationWarning:\s[^\n]+/g, "");
+}
+
+function runTests(testFiles, grep, messages) {
+  // Allow the user to choose a different subfolder
+  const rootPath = applySubdirectory(vscode.workspace.rootPath);
 
   return fork(
     path.resolve(module.filename, '../worker/runtest.js'),
@@ -23,6 +37,7 @@ function runTests(testFiles, grep) {
         files: testFiles,
         options: config.options(),
         grep,
+        requires: config.requires(),
         rootPath
       })
     ],
@@ -37,6 +52,12 @@ function runTests(testFiles, grep) {
 
     outputChannel.appendLine(`Running Mocha with Node.js at ${process.spawnfile}\n`);
 
+    if (messages) {
+      for (let message of messages) {
+        outputChannel.append(`${message}\n`);
+      }
+    }
+    
     const stderrBuffers = [];
 
     process.stderr.on('data', data => {
@@ -58,7 +79,7 @@ function runTests(testFiles, grep) {
         let resultJSON;
 
         try {
-          resultJSON = stderrText && JSON.parse(stderrText);
+          resultJSON = stderrText && JSON.parse(stripWarnings(stderrText));
         } catch (ex) {
           code = 1;
         }
@@ -76,6 +97,9 @@ function runTests(testFiles, grep) {
 }
 
 function findTests(rootPath) {
+  // Allow the user to choose a different subfolder
+  rootPath = applySubdirectory(rootPath);
+
   return fork(
     path.resolve(module.filename, '../worker/findtests.js'),
     [
@@ -85,6 +109,7 @@ function findTests(rootPath) {
           glob: config.files().glob,
           ignore: config.files().ignore
         },
+        requires: config.requires(),
         rootPath
       })
     ],
@@ -116,7 +141,7 @@ function findTests(rootPath) {
         let resultJSON;
 
         try {
-          resultJSON = stderrText && JSON.parse(stderrText);
+          resultJSON = stderrText && JSON.parse(stripWarnings(stderrText));
         } catch (ex) {
           code = 1;
         }

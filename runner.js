@@ -20,8 +20,8 @@ Runner.prototype.loadTestFiles = function () {
     });
 };
 
-Runner.prototype._runMocha = function (testFiles, grep) {
-  return MochaShim.runTests(dedupeStrings(testFiles), grep)
+Runner.prototype._runMocha = function (testFiles, grep, logMessages) {
+  return MochaShim.runTests(dedupeStrings(testFiles), grep, logMessages)
     .then(result => {
       this.lastRunResult = result;
 
@@ -35,8 +35,8 @@ Runner.prototype._runMocha = function (testFiles, grep) {
     });
 };
 
-Runner.prototype.runAll = function () {
-  return this._runMocha(this.tests.map(test => test.file));
+Runner.prototype.runAll = function (logMessages) {
+  return this._runMocha(this.tests.map(test => test.file), null, logMessages);
 };
 
 Runner.prototype.runWithGrep = function (grep) {

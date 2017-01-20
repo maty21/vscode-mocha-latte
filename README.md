@@ -16,6 +16,7 @@ You can run tests by:
 * All tests in the workspace
 * All or failed tests in last run
 * Tests that match a Regular Expression
+* Tests that the current cursor position (or the current file)
 * One test that you pick from a list
 
 ### How it works
@@ -24,6 +25,10 @@ By default, this extensions will discover tests by searching for `test/**/*.js` 
 Because your tests may requires a newer version of Node.js than the one powering Visual Studio Code, thus, this extension will attempt to find your installed Node.js and use it for your tests. It will search for the installed Node.js as indicated by environmental variable `PATH`. You can find the logic [here](https://github.com/cspotcode/vscode-mocha-latte/blob/master/fork.js).
 
 When the test is being run, we will add `NODE_PATH` to point to your workspace `node_modules` folder to help [resolving external modules](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders).
+
+When you ask to run the test under cursor position, the extension will parse the current file and look for matching tests or suites.
+If the file contains tests or suites defined using template strings or via dynamic generation, the regular expression `(.+)` will be used as a placeholder in order to have a better matching without having to evaluate the file twice.
+This implies that more tests than expected might be run.
 
 ## Fit yourself
 
@@ -53,6 +58,11 @@ Under File > Preferences > Workspace Settings, you can configure [Mocha options]
 // Mocha: Options to pass to node executable
 "mocha.node_options": [],
 
+// Mocha: Subdirectory in the Workspace where run mocha from
+"mocha.subfolder": "",
+
+// Mocha: List of files to require before running mocha
+"mocha.requires": [],
 ```
 
 ### Setting a keyboard shortcut
@@ -72,6 +82,7 @@ Following commands are also supported:
 | `mocha.runAllTests` | Mocha: Run all tests |
 | `mocha.runFailedTests` | Mocha: Run failed tests |
 | `mocha.runLastSetAgain` | Mocha: Run last set again |
+| `mocha.runTestAtCursor` | Mocha: Run tests matching the current cursor position or the current active file |
 | `mocha.runTestsByPattern` | Mocha: Run tests matching a pattern |
 | `mocha.selectAndRunTest` | Mocha: Select and run a test |
 
