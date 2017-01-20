@@ -11,3 +11,5 @@ vsc-extension-quickstart.md
 *.gif
 demo.png
 **/debug.log
+vagrant/**
+Vagrantfile
