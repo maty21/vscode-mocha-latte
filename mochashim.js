@@ -8,7 +8,7 @@ const
   vscode = require('vscode');
 
 function envWithNodePath(rootPath) {
-  return Object.assign({
+  return Object.assign({}, process.env, {
     NODE_PATH: `${rootPath}${path.sep}node_modules`
   }, config.env());
 }
