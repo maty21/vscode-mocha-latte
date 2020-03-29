@@ -103,6 +103,6 @@
     "bluebird": "^3.3.5",
     "escape-regexp": "0.0.1",
     "glob": "^7.0.3",
-    "mocha": "^2.4.5"
+    "mocha": "^6.0.0"
   }
 }
